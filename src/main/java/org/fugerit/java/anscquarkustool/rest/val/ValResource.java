@@ -6,6 +6,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fugerit.java.anscquarkustool.rest.val.tipofile.FacadeValidazioneAllegati;
 import org.fugerit.java.anscquarkustool.rest.val.tipofile.ValidazioneResult;
 import org.fugerit.java.emp.sm.service.ServiceMessage;
@@ -25,7 +28,12 @@ public class ValResource {
     @Path("/{ext}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response validateFile(@PathParam("ext") String ext, @RestForm InputStream file) {
+    @Operation(
+            summary = "Validazione file allegato",
+            description = "Valida un file con estensione data tra quelle consentite nel sistema ANSC (PDF, JPG, TIF, P7M)."
+    )
+    @Tag(name="validazione", description="Validazione file allegati")
+    public Response validateFile(@Parameter(description = "Estensione del file (PDF, JPG, TIF, P7M)") @PathParam("ext") String ext, @RestForm InputStream file) {
         ValOutput output = new ValOutput();
         int status = Response.Status.BAD_REQUEST.getStatusCode();
         try {

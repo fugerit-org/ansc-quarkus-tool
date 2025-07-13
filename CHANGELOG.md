@@ -7,6 +7,8 @@ e il progetto si conforma al [Versionamento semantico](https://semver.org/spec/v
 
 ## [Non rilasciato]
 
+## [1.0.0] - 2025-07-13
+
 ### Added
 
 - Servizio /val/{ext} per la validazione dei file di ANSC
