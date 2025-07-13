@@ -17,6 +17,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fj-doc-version>8.14.0</fj-doc-version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <fj-service-helper-version>1.5.0</fj-service-helper-version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -31,6 +32,13 @@
         <groupId>org.fugerit.java</groupId>
         <artifactId>fj-doc</artifactId>
         <version>${fj-doc-version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.fugerit.java</groupId>
+        <artifactId>fj-service-helper-bom</artifactId>
+        <version>${fj-service-helper-version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -74,6 +82,22 @@
     <dependency>
       <groupId>org.fugerit.java</groupId>
       <artifactId>fj-doc-freemarker</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.fugerit.java</groupId>
+      <artifactId>fj-doc-val-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.fugerit.java</groupId>
+      <artifactId>fj-doc-val-pdfbox</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.fugerit.java</groupId>
+      <artifactId>fj-doc-val-p7m</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.fugerit.java</groupId>
+      <artifactId>emp-service-model</artifactId>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
