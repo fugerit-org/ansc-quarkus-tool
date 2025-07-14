@@ -169,26 +169,6 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.fugerit.java</groupId>
-        <artifactId>fj-doc-maven-plugin</artifactId>
-        <version>${fj-doc-version}</version>
-        <executions>
-          <execution>
-            <id>freemarker-verify</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-            <configuration>
-              <templateBasePath>${project.basedir}/src/main/resources/ansc-quarkus-tool/template</templateBasePath>
-              <generateReport>true</generateReport>
-              <failOnErrors>true</failOnErrors>
-              <reportOutputFolder>${project.build.directory}/freemarker-syntax-verify-report</reportOutputFolder>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   <profiles>

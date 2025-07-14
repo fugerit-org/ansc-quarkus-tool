@@ -1,8 +1,0 @@
-greeting:
-  message: "hello"
-
-quarkus:
-  native:
-    # if needed add -H:+UnlockExperimentalVMOptions
-    additional-build-args: -H:IncludeResources=ansc-quarkus-tool/fm-doc-process-config.xml,\
-      -H:IncludeResources=ansc-quarkus-tool/template/document.ftl
