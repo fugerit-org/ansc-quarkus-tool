@@ -1,0 +1,113 @@
+---
+openapi: 3.1.0
+tags:
+  - name: validazione
+    description: Validazione file allegati
+components:
+  schemas:
+    ServiceMessage:
+      type: object
+      properties:
+        code:
+          type: string
+          examples:
+            - "401001"
+          description: Message identifier
+        severity:
+          type: string
+          examples:
+            - E
+          description: "Message severity, E = Error, W = Warning, I = Info, S = Success"
+        text:
+          type: string
+          examples:
+            - User not authorized to access the resource.
+          description: Message test
+    ValOutput:
+      type: object
+      properties:
+        errors:
+          type: array
+          examples:
+            - - code: "500001"
+                severity: E
+                text: sample error
+          items:
+            $ref: "#/components/schemas/ServiceMessage"
+          description: Error messages list
+        warnings:
+          type: array
+          examples:
+            - - code: "401001"
+                severity: E
+                text: sample warning
+          items:
+            $ref: "#/components/schemas/ServiceMessage"
+          description: Warning messages list
+        infos:
+          type: array
+          examples:
+            - - code: "100001"
+                severity: E
+                text: sample info
+          items:
+            $ref: "#/components/schemas/ServiceMessage"
+          description: Info messages list
+        success:
+          type: array
+          examples:
+            - - code: "200001"
+                severity: S
+                text: sample success
+          items:
+            $ref: "#/components/schemas/ServiceMessage"
+          description: Success messages list
+        valid:
+          type: boolean
+paths:
+  /val/{ext}:
+    post:
+      summary: Validazione file allegato
+      description: "Valida un file con estensione data tra quelle consentite nel sistema\
+        \ ANSC (PDF, JPG, TIF, P7M)."
+      tags:
+        - validazione
+      parameters:
+        - description: "Estensione del file (PDF, JPG, TIF, P7M)"
+          name: ext
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: Validazione avvenuta con esito positivo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValOutput"
+        "400":
+          description: Validazione avvenuta con esito negativo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValOutput"
+        "500":
+          description: Validazione avvenuta con errore
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValOutput"
+info:
+  title: ansc-quarkus-tool API
+  version: 1.0.0
