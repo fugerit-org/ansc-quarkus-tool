@@ -7,7 +7,6 @@ import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.doc.val.core.DocTypeValidationResult;
 import org.fugerit.java.doc.val.core.DocTypeValidator;
 import org.fugerit.java.doc.val.core.DocValidatorFacade;
-import org.fugerit.java.doc.val.core.DocValidatorTypeCheck;
 import org.fugerit.java.doc.val.core.basic.ImageValidator;
 import org.fugerit.java.doc.val.p7m.P7MContentValidator;
 import org.fugerit.java.doc.val.p7m.P7MValidator;
@@ -46,11 +45,14 @@ public class FacadeValidazioneAllegati {
             try ( InputStream is = new ByteArrayInputStream(data) ) {
                 DocTypeValidationResult result = validator.validate( is );
                 EnumTipoFile innerFile = tipoFile;
-                if ( EnumTipoFile.P7M == tipoFile ) {
+                if ( result.isResultOk() && EnumTipoFile.P7M == tipoFile ) {
                     P7MContentValidator p7mValidator = (P7MContentValidator) this.validators.get( tipoFile );
                     try ( InputStream isInner = new ByteArrayInputStream(data) ) {
                         String type = p7mValidator.checkInnerType( isInner );
-                        innerFile = EnumTipoFile.fromDescription(  type );
+                        log.info( "p7m inner type : {}", type );
+                        innerFile = MAP_TYPES.get( type );
+                    } catch (Exception e) {
+                        result.withMainException( e );
                     }
                 }
                 return new ValidazioneResult( tipoFile, innerFile, result.isResultOk(), result.getValidationMessage() );

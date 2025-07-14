@@ -7,6 +7,12 @@ e il progetto si conforma al [Versionamento semantico](https://semver.org/spec/v
 
 ## [Non rilasciato]
 
+## [1.1.0] - 2025-07-14
+
+### Added
+
+- Prova a fornire l'errore di validazione nella risposta
+
 ## [1.0.0] - 2025-07-13
 
 ### Added
