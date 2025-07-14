@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.fugerit.java.anscquarkustool.rest.val.tipofile.EnumTipoFile;
 import org.fugerit.java.anscquarkustool.rest.val.tipofile.FacadeValidazioneAllegati;
 import org.fugerit.java.anscquarkustool.rest.val.tipofile.ValidazioneResult;
 import org.fugerit.java.emp.sm.service.ServiceMessage;
@@ -52,12 +53,19 @@ public class ValResource {
         ValOutput output = new ValOutput();
         output.setValid(Boolean.FALSE);
         try {
-            ValidazioneResult result = this.facade.validate( file );
-            log.info( "valid? : {}", result );
-            output.setValid( result.isValido() );
-            if ( output.isValid() ) {
-                output.addAllBySeverity( ServiceMessage.newMessage( "OK", ServiceMessage.Severity.INFO, result.getDescriptionFormato() ) );
-                return Response.ok(output).build();
+            EnumTipoFile tipo = EnumTipoFile.fromDescription(ext);
+            if ( tipo == null ) {
+                output.addAllBySeverity( ServiceMessage.newMessage( "OK", ServiceMessage.Severity.ERROR, String.format( "Formato non supportato : %s", ext ) ) );
+            } else {
+                ValidazioneResult result = this.facade.validate( file, tipo );
+                log.info( "tipo : {}, valid? : {}", tipo, result );
+                output.setValid( result.isValido() );
+                if ( output.isValid() ) {
+                    output.addAllBySeverity( ServiceMessage.newMessage( "OK", ServiceMessage.Severity.INFO, result.getDescription() ) );
+                    return Response.ok(output).build();
+                } else {
+                    output.addAllBySeverity( ServiceMessage.newMessage( "KO", ServiceMessage.Severity.ERROR, result.getDescription() ) );
+                }
             }
         } catch (Exception e) {
             return Response.status( Response.Status.INTERNAL_SERVER_ERROR.getStatusCode() ).entity(output).build();

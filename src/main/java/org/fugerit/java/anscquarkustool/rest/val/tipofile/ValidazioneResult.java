@@ -18,6 +18,9 @@ public class ValidazioneResult {
     @Getter
     private boolean valido;
 
+    @Getter
+    private String message;
+
     public Integer getCodeFormato() {
         return SafeFunction.getIfNotNull( this.getFormato(), () -> this.getFormato().getCode() );
     }
@@ -32,6 +35,23 @@ public class ValidazioneResult {
 
     public String getDescriptionFormatoRef() {
         return SafeFunction.getIfNotNull( this.getFormatoRef(), () -> this.getFormatoRef().getDescription() );
+    }
+
+    public String getDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append( "Valido?:" );
+        sb.append( this.isValido() );
+        sb.append( ", Formato:" );
+        sb.append( this.getDescriptionFormato() );
+        if ( !this.getDescriptionFormato().equals( this.getDescriptionFormatoRef() ) ) {
+            sb.append( ", Formato interno:" );
+            sb.append( this.getDescriptionFormatoRef() );
+        }
+        if ( this.getMessage() != null ) {
+            sb.append( ", Messaggio:" );
+            sb.append( this.getMessage() );
+        }
+        return sb.toString();
     }
 
 }

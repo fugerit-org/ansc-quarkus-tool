@@ -22,4 +22,13 @@ public enum EnumTipoFile {
         this.description = description;
     }
 
+    public static EnumTipoFile fromDescription(String description) {
+        for (EnumTipoFile tipo : EnumTipoFile.values()) {
+            if (tipo.getDescription().equalsIgnoreCase(description)) {
+                return tipo;
+            }
+        }
+        return null;
+    }
+
 }
