@@ -7,6 +7,8 @@ e il progetto si conforma al [Versionamento semantico](https://semver.org/spec/v
 
 ## [Non rilasciato]
 
+## [1.1.1] - 2025-07-25
+
 ### Changed
 
 - quarkus version 3.24.5

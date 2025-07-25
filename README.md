@@ -1,5 +1,7 @@
 # ansc-quarkus-tool
 
+[![Tenere un changelog v1.1.0 badge](https://img.shields.io/badge/changelog-Tenere%20un%20Changelog%20v1.1.0-%23E05735)](CHANGELOG.md)
+
 Tool di supporto per il progetto ANSC, al momento contiene 
 
 1. Debug validazione allegati
